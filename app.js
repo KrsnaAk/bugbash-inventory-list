@@ -48,3 +48,20 @@ function renderLowStockSummary() {
   summary.textContent = items.filter((item) => item.stock <= 5).length + " low-stock item(s)"; host.querySelector("h2")?.after(summary);
 }
 renderLowStockSummary();
+
+
+// Inventory expansion: reorder queue and stock summary.
+(() => {
+  const baseRender = render; let reorderPoint = 5;
+  const enhance = () => {
+    if (document.querySelector("#inventory-tools")) return;
+    const panel = document.createElement("section"); panel.id = "inventory-tools"; panel.className = "item";
+    panel.innerHTML = '<strong>Inventory tools</strong><div class="row"><input id="reorder-point" type="number" value="5" min="0"/><button id="apply-reorder" type="button">Apply threshold</button></div><p id="inventory-summary" class="muted small"></p>';
+    document.querySelector("#app")?.append(panel);
+    const update = () => { const low = items.filter((item) => item.stock <= reorderPoint); panel.querySelector("#inventory-summary").textContent = low.length + " item(s) need replenishment"; };
+    panel.querySelector("#apply-reorder").onclick = () => { reorderPoint = Number(panel.querySelector("#reorder-point").value); update(); };
+    update();
+  };
+  render = () => { baseRender(); enhance(); };
+  enhance();
+})();
