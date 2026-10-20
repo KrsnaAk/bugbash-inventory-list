@@ -39,3 +39,12 @@ function render() {
   );
 }
 render();
+
+
+// Added organizer feature: low-stock count.
+function renderLowStockSummary() {
+  const host = document.querySelector("#app"); if (!host || document.querySelector("#low-stock-summary")) return;
+  const summary = document.createElement("p"); summary.id = "low-stock-summary"; summary.className = "muted small";
+  summary.textContent = items.filter((item) => item.stock <= 5).length + " low-stock item(s)"; host.querySelector("h2")?.after(summary);
+}
+renderLowStockSummary();
