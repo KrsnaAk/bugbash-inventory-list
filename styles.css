@@ -177,3 +177,24 @@ textarea {
     flex-direction: column;
   }
 }
+
+
+/* Inventory accessibility improvements */
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #72e7dc;
+  outline-offset: 3px;
+}
+
+.item .warning,
+.item .danger-text {
+  font-weight: 700;
+}
+
